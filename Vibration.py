@@ -1,5 +1,3 @@
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -72,7 +70,6 @@ def main():
   t0 = 0.0
   gamma = np.array([0.05,0.01,0.5,0,0,0]) 
   omega = np.array([0.05,0.6,0.1,0.25,0.3,0.3]) 
-  #f0 = np.array([0.05,0.05,0.05,0.05,0.05,0.05])
   f0 = np.full(n_param, 0.05)
   _omega = np.array([0.3,0.3,0.3,0.25,0.3,0.35])
   n_step = 10000
@@ -90,7 +87,7 @@ def main():
     ans_x, ans_v = LeapFrog(x0[i], v0[i], t0, gamma[i], 
                                   omega[i], f0[i], _omega[i], n_step, dt)
     ans.append(np.array([ans_x, ans_v]))
-  #ここからはt-xグラフの表示関係----------------------------------------------------- 
+    #ここからはt-xグラフの表示関係----------------------------------------------------- 
     #横軸を時刻にする
     t_axis = np.arange(0, n_step+1)
     #y軸の範囲
@@ -105,7 +102,7 @@ def main():
   plt.show()
   #------------------------------------------------------------
 
-  #アニメーション
+  #アニメーション描画関係---------------------------------------------------------------
   graph_list = []
   fig = plt.figure() #データをplotするグラフを1つ用意する
   for j in range(n_step):
@@ -124,10 +121,11 @@ def main():
   plt.hlines(0, 0, n_param-1, linestyle='dashed', linewidth=0.5) #x=0の補助線
   for i in range(n_param):
     plt.vlines(i, min(ans[i][0][0,:]), max(ans[i][0][0,:]), linestyle='solid', linewidth=0.5,
-                label=label[i], color=color[i])             #y=（組み合わせID）の補助線
+                label=label[i], color=color[i])             #各組合せの振れ幅を表す補助線
   plt.legend(prop=fp, bbox_to_anchor=(1.1, 0), loc='lower right', borderaxespad=0, fontsize=12)
   plt.show()  #表示
   ani.save("Vibration.gif", writer="imagemagick", fps=60)   #アニメーションをgifとして保存する
+  #-------------------------------------------------------------------------------------------------
  
 if __name__ == '__main__':
   main()
